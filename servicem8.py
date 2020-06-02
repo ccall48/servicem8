@@ -65,7 +65,7 @@ class ServiceM8:
         r = requests.get(url['assettypefield'], auth=(self.username, self.password))
         return json.dumps(r.json(), indent=2)
 
-    def attachment(self, attachment=None): #add attachment search?
+    def attachment(self):
         r = requests.get(url['attachment'], auth=(self.username, self.password))
         return json.dumps(r.json(), indent=2)
 
@@ -86,7 +86,7 @@ class ServiceM8:
                 if i['name'] == str(company):
                     return json.dumps(i, indent=2)
 
-    def companycontact(self): #add company contact search?
+    def companycontact(self): #add company contact search
         r = requests.get(url['companycontact'], auth=(self.username, self.password))
         return json.dumps(r.json(), indent=2)
 
