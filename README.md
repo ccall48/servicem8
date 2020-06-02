@@ -7,7 +7,7 @@ Documentation can be found here: https://developer.servicem8.com/docs
 Commits & Pull requests welcome if you want to contribute.
 
 # Usage example
-from servicem8 import ServiceM8
+from servicem8 import ServiceM8<br>
 client = ServiceM8("john@example.com","secretpassword")
 
 client.job()
