@@ -11,10 +11,10 @@ from servicem8 import ServiceM8
 client = ServiceM8("john@example.com","secretpassword")
 
 client.job()
->>> returns all jobs unformated json.
+  - returns all jobs unformated json.
 
 print(client.job())
->>> returns all jobs in indented json format.
+  - returns all jobs in indented json format.
 
 print(client.job(2155)) or print(client.job("2155"))
->>> returns job 2155 in indented json format, if it exists or None.
+  - returns job 2155 in indented json format, if it exists or None.
