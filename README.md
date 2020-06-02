@@ -8,13 +8,16 @@ Commits & Pull requests welcome if you want to contribute.
 
 # Usage example
 from servicem8 import ServiceM8<br>
-client = ServiceM8("john@example.com","secretpassword")
+client = ServiceM8("john@example.com", "secretpassword")
 
 client.job()
   - returns all jobs unformated json.
+
+client.job(2155) or client.job("2155")
+  - returns all jobs unformated json if exists or None.
 
 print(client.job())
   - returns all jobs in indented json format.
 
 print(client.job(2155)) or print(client.job("2155"))
-  - returns job 2155 in indented json format, if it exists or None.
+  - returns job 2155 in indented json format if exists or None.
