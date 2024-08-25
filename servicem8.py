@@ -9,41 +9,41 @@ print(client.job())
 print(client.job(2339)) or print(client.job("2339"))
 """
 import functools
-
 import requests
 
-url = { "assets":"https://api.servicem8.com/api_1.0/asset",
-        "assettype":"https://api.servicem8.com/api_1.0/assettype",
-        "assettypefield":"https://api.servicem8.com/api_1.0/assettypefield",
-        "attachment":"https://api.servicem8.com/api_1.0/attachment",
-        "badge":"https://api.servicem8.com/api_1.0/badge",
-        "category":"https://api.servicem8.com/api_1.0/category",
-        "company":"https://api.servicem8.com/api_1.0/company",
-        "companycontact":"https://api.servicem8.com/api_1.0/companycontact",
-        "emailtemplate":"https://api.servicem8.com/api_1.0/emailtemplate",
-        "feedback":"https://api.servicem8.com/api_1.0/feedback",
-        "form":"https://api.servicem8.com/api_1.0/form",
-        "formfield":"https://api.servicem8.com/api_1.0/formfield",
-        "formresponse":"https://api.servicem8.com/api_1.0/formresponse",
-        "job":"https://api.servicem8.com/api_1.0/job",
-        "jobactivity":"https://api.servicem8.com/api_1.0/jobactivity",
-        "joballocation":"https://api.servicem8.com/api_1.0/joballocation",
-        "jobcontact":"https://api.servicem8.com/api_1.0/jobcontact",
-        "jobmaterial":"https://api.servicem8.com/api_1.0/jobmaterial",
-        "jobpayment":"https://api.servicem8.com/api_1.0/jobpayment",
-        "knowledgearticle":"https://api.servicem8.com/api_1.0/knowledgearticle",
-        "location":"https://api.servicem8.com/api_1.0/location",
-        "material":"https://api.servicem8.com/api_1.0/material",
-        "note":"https://api.servicem8.com/api_1.0/note",
-        "queue":"https://api.servicem8.com/api_1.0/queue",
-        "securityrole":"https://api.servicem8.com/api_1.0/securityrole",
-        "smstemplate":"https://api.servicem8.com/api_1.0/smstemplate",
-        "staff":"https://api.servicem8.com/api_1.0/staff",
-        "staffmessage":"https://api.servicem8.com/api_1.0/staffmessage.",
-        "task":"https://api.servicem8.com/api_1.0/task",
-        "taxrate":"https://api.servicem8.com/api_1.0/taxrate",
-        "vendor":"https://api.servicem8.com/api_1.0/vendor",
-        "webhooksubscriptions": "https://api.servicem8.com/webhook_subscriptions"}
+url = {"assets": "https://api.servicem8.com/api_1.0/asset",
+       "assettype": "https://api.servicem8.com/api_1.0/assettype",
+       "assettypefield": "https://api.servicem8.com/api_1.0/assettypefield",
+       "attachment": "https://api.servicem8.com/api_1.0/attachment",
+       "badge": "https://api.servicem8.com/api_1.0/badge",
+       "category": "https://api.servicem8.com/api_1.0/category",
+       "company": "https://api.servicem8.com/api_1.0/company",
+       "companycontact": "https://api.servicem8.com/api_1.0/companycontact",
+       "emailtemplate": "https://api.servicem8.com/api_1.0/emailtemplate",
+       "feedback": "https://api.servicem8.com/api_1.0/feedback",
+       "form": "https://api.servicem8.com/api_1.0/form",
+       "formfield": "https://api.servicem8.com/api_1.0/formfield",
+       "formresponse": "https://api.servicem8.com/api_1.0/formresponse",
+       "job": "https://api.servicem8.com/api_1.0/job",
+       "jobactivity": "https://api.servicem8.com/api_1.0/jobactivity",
+       "joballocation": "https://api.servicem8.com/api_1.0/joballocation",
+       "jobcontact": "https://api.servicem8.com/api_1.0/jobcontact",
+       "jobmaterial": "https://api.servicem8.com/api_1.0/jobmaterial",
+       "jobpayment": "https://api.servicem8.com/api_1.0/jobpayment",
+       "knowledgearticle": "https://api.servicem8.com/api_1.0/knowledgearticle",
+       "location": "https://api.servicem8.com/api_1.0/location",
+       "material": "https://api.servicem8.com/api_1.0/material",
+       "note": "https://api.servicem8.com/api_1.0/note",
+       "queue": "https://api.servicem8.com/api_1.0/queue",
+       "securityrole": "https://api.servicem8.com/api_1.0/securityrole",
+       "smstemplate": "https://api.servicem8.com/api_1.0/smstemplate",
+       "staff": "https://api.servicem8.com/api_1.0/staff",
+       "staffmessage": "https://api.servicem8.com/api_1.0/staffmessage.",
+       "task": "https://api.servicem8.com/api_1.0/task",
+       "taxrate": "https://api.servicem8.com/api_1.0/taxrate",
+       "vendor": "https://api.servicem8.com/api_1.0/vendor",
+       "webhooksubscriptions": "https://api.servicem8.com/webhook_subscriptions"}
+
 
 class Response:
     """
@@ -59,7 +59,7 @@ class Response:
         self.__dict__.update(data)
 
     def __str__(self):
-        return (f"{self.name}: {self.uuid}")
+        return f"{self.name}: {self.uuid}"
 
     def __getattr__(self, item):
         """
@@ -118,7 +118,8 @@ class Response:
 class Job(Response):
 
     def __str__(self):
-        return (f"{self.generated_job_id}: {self.job_address.replace('\n', ' ')}")
+        return f"{self.generated_job_id}: {self.job_address.replace('\n', ' ')}"
+
     @property
     def attachment(self):
         return self._client.attachment(filters=Filter('related_object_uuid', Filter.equal, self.uuid))
@@ -172,7 +173,6 @@ class ServiceM8:
         def requested(self, *args, **kwargs):
             return f(self, url[f.__name__], *args, **kwargs)
         return requested
-
 
     @sm8_endpoint
     def assets(self, endpoint, filters=None):
@@ -228,7 +228,7 @@ class ServiceM8:
 
     @sm8_endpoint
     def job(self, endpoint, filters=None):
-        if type(filters) == int:
+        if isinstance(filters, int):
             filters = Filter('generated_job_id', Filter.equal, filters)
         return self._make_get_request(endpoint, filters, return_class=Job)
 
