@@ -116,6 +116,9 @@ class Response:
 
 
 class Job(Response):
+    """
+    Subclass of response to take care of irregular patterns in naming of child objects
+    """
 
     def __str__(self):
         return f"{self.generated_job_id}: {self.job_address.replace('\n', ' ')}"
@@ -169,6 +172,9 @@ class ServiceM8:
 
     @staticmethod
     def sm8_endpoint(f):
+        """
+        function wrapper to inject endpoints based on function name
+        """
         @functools.wraps(f)
         def requested(self, *args, **kwargs):
             return f(self, url[f.__name__], *args, **kwargs)
@@ -227,10 +233,15 @@ class ServiceM8:
         return self._make_get_request(endpoint, filters)
 
     @sm8_endpoint
-    def job(self, endpoint, filters=None):
+    def job(self, endpoint, filters=None, show_inactive=False):
         if isinstance(filters, int):
             filters = Filter('generated_job_id', Filter.equal, filters)
-        return self._make_get_request(endpoint, filters, return_class=Job)
+        jobs = self._make_get_request(endpoint, filters, return_class=Job)
+        if show_inactive:
+            return jobs
+        else:
+            return list(filter(lambda j: j.active == 1, jobs))
+
 
     @sm8_endpoint
     def jobactivity(self, endpoint, filters=None):
