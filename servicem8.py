@@ -57,7 +57,8 @@ class Response:
 
     attr_remap = {'completion_actioned_by': 'staff',
                   'payment_actioned_by': 'staff',
-                  'created_by_staff': 'staff'}
+                  'created_by_staff': 'staff',
+                  'navigating_to_job': 'job'}
 
     def __init__(self, client, data, endpoint):
         self._client = client
@@ -86,7 +87,7 @@ class Response:
         if uuid == '':
             return None
         if var in self._raw:
-            return self._client.__getattribute__(self.attr_remap.get(item, item))(Filter('uuid', Filter.equal, uuid))
+            return self._client.__getattribute__(self.attr_remap.get(item, item.replace('_', '')))(Filter('uuid', Filter.equal, uuid))
         raise AttributeError
 
     def __getattribute__(self, item):

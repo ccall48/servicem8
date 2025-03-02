@@ -36,6 +36,12 @@ Some "Magic" lazy loading has been implemented with uuid fields
     job.category  # will return a Response object representing a category
     job.completion_actioned_by  # will return a Response object representing the staff member
                                   that completed this job
+    
+    # you can go as deep as you like with this, eg:
+        job.completion_actioned_by.navigating_to_job.company
+    
+    # as long as the next object can be found, this should work unless its an obscure pesky field
+      feel free to raise issues for these
 
 to return the raw json response:
 
