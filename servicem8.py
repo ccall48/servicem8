@@ -9,7 +9,10 @@ print(client.job())
 print(client.job(2339)) or print(client.job("2339"))
 """
 import functools
+from typing import Iterable
+
 import requests
+import json
 
 url = {"assets": "https://api.servicem8.com/api_1.0/asset",
        "assettype": "https://api.servicem8.com/api_1.0/assettype",
@@ -51,6 +54,12 @@ class Response:
       - any attribute in this class not starting with '_' is considered an api field, any attribute this class has
         should be considered "private"
     """
+
+    attr_remap = {'completion_actioned_by': 'staff',
+                  'payment_actioned_by': 'staff',
+                  'created_by_staff': 'staff',
+                  'navigating_to_job': 'job'}
+
     def __init__(self, client, data, endpoint):
         self._client = client
         self._raw = data
@@ -59,7 +68,7 @@ class Response:
         self.__dict__.update(data)
 
     def __str__(self):
-        return f"{self.name}: {self.uuid}"
+        return f"{self.uuid}: {self.uuid}"
 
     def __getattr__(self, item):
         """
@@ -78,7 +87,7 @@ class Response:
         if uuid == '':
             return None
         if var in self._raw:
-            return self._client.__getattribute__(item)(Filter('uuid', Filter.equal, uuid))
+            return self._client.__getattribute__(self.attr_remap.get(item, item.replace('_', '')))(Filter('uuid', Filter.equal, uuid))
         raise AttributeError
 
     def __getattribute__(self, item):
@@ -113,6 +122,9 @@ class Response:
             self._changes = dict()
             return True
         return None
+
+    def json(self):
+        return json.dumps(self._raw)
 
 
 class Job(Response):
@@ -240,7 +252,13 @@ class ServiceM8:
         if show_inactive:
             return jobs
         else:
-            return list(filter(lambda j: j.active == 1, jobs))
+            if isinstance(jobs, list):
+                return list(filter(lambda j: j.active == 1, jobs))
+            else:
+                if jobs.active:
+                    return jobs
+                else:
+                    return None
 
 
     @sm8_endpoint
