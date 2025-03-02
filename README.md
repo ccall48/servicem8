@@ -6,18 +6,39 @@ Documentation can be found here: https://developer.servicem8.com/docs
 
 Commits & Pull requests welcome if you want to contribute.
 
-# Usage example
-from servicem8 import ServiceM8<br>
-client = ServiceM8("john@example.com", "secretpassword")
+# Usage examples
 
-client.job()
-  - returns all jobs unformated json.
+    from servicem8 import ServiceM8<br>
+    client = ServiceM8("john@example.com", "secretpassword")
 
-client.job(2155) or client.job("2155")
-  - returns all jobs unformated json if exists or None.
+endpoints can be accessed directly from the client object:
 
-print(client.job())
-  - returns all jobs in indented json format.
+    client.job()
+      - returns all jobs as Response objects
+    
+    client.staff()
+      - returns all staff as Response objects
 
-print(client.job(2155)) or print(client.job("2155"))
-  - returns job 2155 in indented json format if exists or None.
+filters work as you would expect
+
+    from servicem8 import Filter
+    filter = Filter("active", Filter.equal, 0)
+    client.staff(filters=filter)
+
+The only object that supports filtering without a filter object is Job, and only for generated_job_id
+
+    client.job(100)  # returns job #100
+
+
+Some "Magic" lazy loading has been implemented with uuid fields
+    
+    job = client.job(100)
+    job.category  # will return a Response object representing a category
+    job.completion_actioned_by  # will return a Response object representing the staff member
+                                  that completed this job
+
+to return the raw json response:
+
+    client.job().json()
+      - returns all jobs in indented json format.
+
