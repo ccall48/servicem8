@@ -23,7 +23,7 @@ setup(
         'certifi==2024.7.4',
         'chardet==3.0.4',
         'idna==3.7',
-        'requests==2.32.0',
+        'requests==2.32.4',
         'urllib3==1.26.19'
     ],
     entry_points="""
