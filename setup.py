@@ -24,7 +24,7 @@ setup(
         'chardet==3.0.4',
         'idna==3.7',
         'requests==2.33.0',
-        'urllib3==2.6.3'
+        'urllib3==2.7.0'
     ],
     entry_points="""
     """,
