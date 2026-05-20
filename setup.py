@@ -22,7 +22,7 @@ setup(
     install_requires=[
         'certifi==2024.7.4',
         'chardet==3.0.4',
-        'idna==3.7',
+        'idna==3.15',
         'requests==2.33.0',
         'urllib3==2.7.0'
     ],
