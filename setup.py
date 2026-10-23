@@ -20,7 +20,7 @@ setup(
     long_description=readme,
     py_modules='servicem8',
     install_requires=[
-        'certifi==2024.7.4',
+        'certifi==2026.10.19',
         'chardet==3.0.4',
         'idna==3.15',
         'requests==2.33.0',
